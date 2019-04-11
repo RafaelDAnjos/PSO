@@ -21,9 +21,9 @@ for l in range(10):
         velocidade.append([3, 4])
 
 
-    for i in range(20):
+    for i in range(100):
         for j in range(len(particulas)):
-            apt = abs(0.5 + (math.sin(((particulas[j][0] ** 2) + (particulas[j][1] ** 2)) ** 0.5))**2 - 0.5) / ((1 + 0.001 * ((particulas[j][0] ** 2) + (particulas[j][1]))) ** 2)
+            apt = abs(0.5 + ((math.sin(((particulas[j][0] ** 2) + (particulas[j][1] ** 2)) ** 0.5))**2 - 0.5) / ((1 + 0.001 * ((particulas[j][0] ** 2) + (particulas[j][1]))) ** 2))
             if (i == 0):
                 particulas[j].append(apt)
                 pbest.append([particulas[j][0], particulas[j][1]])
