@@ -3,7 +3,7 @@ import math
 
 # Determinando número de particulas
 from typing import List
-for l in range(1):
+for l in range(10):
     numparticula = 20
     particulas = []
     pbest = []
@@ -14,6 +14,8 @@ for l in range(1):
     melhorapt = 0
     fi1 = 0
     fi2 = 0
+    wmax = 0.9
+    wmin = 0.4
 
     vx1 = random.randint(0.15 * bordaInferior, 0.15 * bordaSuperior)
     vx2 = random.randint(0.15 * bordaInferior, 0.15 * bordaSuperior)
@@ -26,7 +28,7 @@ for l in range(1):
 
     for i in range(100):
         for j in range(len(particulas)):
-            apt = abs(0.5 + ((math.sin(((particulas[j][0] ** 2) + (particulas[j][1] ** 2)) ** 0.5))**2 - 0.5) / ((1 + 0.001 * ((particulas[j][0] ** 2) + (particulas[j][1]))) ** 2))
+            apt =  0.5 +((math.sin(math.sqrt(particulas[j][0]**2 + particulas[j][1]**2)))**2 - 0.5)/((1+0.001*(particulas[j][0]**2 + particulas[j][1]**2))**2)
             if (i == 0):
                 w = 0.9
                 particulas[j].append(apt)
@@ -52,15 +54,14 @@ for l in range(1):
                     gbest[0] = particulas[j][0]
                     gbest[1] = particulas[j][1]
 
+            w = wmax - j*((wmax-wmin)/len(particulas))
 
-            if i!= 0:
-                w = w - 0.1
             for k in range(len(velocidade[0])):
                 r1 = random.uniform(0,1)
                 r2 = random.uniform(0,1)
 
 
-                velocidade[j][k] = (w*velocidade[j][k] + 2*r1*(pbest[j][k] - particulas[j][k]) + 2.5*r2*(gbest[k]-particulas[j][k]))
+                velocidade[j][k] = 0.73*(w*velocidade[j][k] + 2.05*r1*(pbest[j][k] - particulas[j][k]) + 2.05*r2*(gbest[k]-particulas[j][k]))
 
                 if velocidade[j][k]< -15:
                     velocidade[j][k] = -15
@@ -87,6 +88,6 @@ for l in range(1):
                 particulas[j][1] = 100
                 velocidade[j][1] = 0
 
-        arq = open("GbestEBestFit100.csv","a")
+        arq = open("GbestEBestFit100.ods","a")
         linha = str(gbest[0])+","+str(gbest[1])+","+str(melhorapt)+"\n"
         arq.write(linha)
